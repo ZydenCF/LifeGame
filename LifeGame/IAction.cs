@@ -8,6 +8,6 @@ namespace LifeGame
 {
     interface IAction
     {
-        void DoAction(Simulation sim);
+        void DoAction(string option);
     }
 }
