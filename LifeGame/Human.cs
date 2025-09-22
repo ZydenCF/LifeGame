@@ -8,123 +8,76 @@ namespace LifeGame
 {
     class Human : Character, IAction
     {
+        private Random random;
         private string name;
 
-        private string[] opciones = { "Ir al colegio", "Comer", "Dormir" };
-
-        private List<string> history;
-        private Stack<string> undone;
-        private Queue<string> pending;
-        private Dictionary<int, string> actions;
-
-        private Random rnd;
-
-        public Human(string nombre)
+        internal Human(int energy, string nameHuman) : base(energy)
         {
-            this.name = nombre;
-            history = new List<string>();
-            undone = new Stack<string>();
-            pending = new Queue<string>();
-            actions = new Dictionary<int, string>()
-            {
-                { 1, "Ir al colegio" },
-                { 2, "Comer" },
-                { 3, "Dormir" }
-            };
-            rnd = new Random();
+            random = new Random();
+            name = nameHuman;
         }
 
-        public string GetNameUpper(bool shout)
+        void IAction.DoAction(string option)
         {
-            Func<string, string> toUpper = s => s.ToUpper();
-            if (shout)
-                return toUpper(name);
-            else
-                return name;
-        }
-
-        public void DoAction(Simulation sim)
-        {
-            Act(sim);
+            Console.WriteLine(name + " decidió: " + option);
         }
 
         public override void Act(Simulation sim)
         {
-            Console.WriteLine("¿Qué debe hacer el humano?");
-            for (int i = 0; i < opciones.Length; i++)
-            {
-                Console.WriteLine((i + 1) + ". " + opciones[i]);
-            }
+            Console.WriteLine("\n--- Opciones del Humano ---");
+            Console.WriteLine("1. Ir al colegio");
+            Console.WriteLine("2. Comer");
+            Console.WriteLine("3. Dormir");
 
-            string opcion = Console.ReadLine();
-            int choice;
-            if (!int.TryParse(opcion, out choice))
-            {
-                Console.WriteLine("Entrada inválida.");
-                return;
-            }
-
-            int luck = rnd.Next(0, 2); // 0 o 1
+            int choice = Convert.ToInt32(Console.ReadLine());
 
             switch (choice)
             {
-                case 1: // Colegio
-                    if (luck == 0)
-                    {
-                        Console.WriteLine(name + " se fue a estudiar.");
-                        Energy -= 5;
-                        sim.Resources += 10;
-                        history.Add("Estudió en el colegio");
-                    }
-                    else
+                case 1:
+                    bool escapo = random.Next(0, 2) == 0;
+                    if (escapo)
                     {
                         Console.WriteLine(name + " escapó del colegio.");
-                        Energy -= 10;
                         sim.Resources -= 5;
-                        history.Add("Escapó del colegio");
-                    }
-                    break;
-
-                case 2: // Comida
-                    if (luck == 0)
-                    {
-                        Console.WriteLine(name + " comió comida chatarra.");
-                        Energy -= 5;
-                        sim.Resources -= 5;
-                        history.Add("Comió comida chatarra");
                     }
                     else
                     {
-                        Console.WriteLine(name + " comió comida saludable.");
-                        Energy += 10;
+                        Console.WriteLine(name + " estudió mucho.");
+                        sim.Resources += 10;
+                    }
+                    break;
+
+                case 2:
+                    Dictionary<int, string> food = new Dictionary<int, string>()
+                    {
+                        { 1, "Comida chatarra" },
+                        { 2, "Comida saludable" }
+                    };
+                    int foodChoice = random.Next(1, 3);
+                    Console.WriteLine(name + " comió: " + food[foodChoice]);
+
+                    if (foodChoice == 1)
+                        sim.Resources -= 5;
+                    else
+                        sim.Resources += 5;
+                    break;
+
+                case 3:
+                    string[] sleep = { "Descansó bien", "Jugó PS5 toda la noche" };
+                    string result = sleep[random.Next(0, sleep.Length)];
+                    Console.WriteLine(name + " " + result);
+
+                    if (result == "Descansó bien")
+                        sim.Resources += 5;
+                    else
                         sim.Resources -= 10;
-                        history.Add("Comió comida saludable");
-                    }
-                    break;
-
-                case 3: // Dormir
-                    if (luck == 0)
-                    {
-                        Console.WriteLine(name + " se fue a descansar.");
-                        Energy += 15;
-                        history.Add("Durmió bien");
-                    }
-                    else
-                    {
-                        Console.WriteLine(name + " jugó en PS5 toda la noche.");
-                        Energy -= 15;
-                        history.Add("Se desveló jugando PS5");
-                    }
                     break;
 
                 default:
-                    Console.WriteLine("Opción inválida, no hizo nada.");
+                    Console.WriteLine(name + " no hizo nada.");
                     break;
             }
         }
-
-        public int GetEnergy()
-        {
-            return Energy;
-        }
     }
+}
+
