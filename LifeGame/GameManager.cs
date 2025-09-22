@@ -8,30 +8,48 @@ namespace LifeGame
 {
     class GameManager
     {
-        private Human human;
-        private Simulation sim;
-        private int day;
+        private Stack<string> actions;
+        private Queue<string> logs;
+        private List<Character> characters;
 
-        public GameManager()
+        internal GameManager()
         {
-            sim = new Simulation();
-            human = new Human("Jugador");
-            day = 1;
+            actions = new Stack<string>();
+            logs = new Queue<string>();
+            characters = new List<Character>();
         }
 
-        public void StartGame()
+        internal void AddCharacter(Character c)
         {
-            while (true) 
+            characters.Add(c);
+        }
+
+        internal void AddAction(string act)
+        {
+            actions.Push(act);
+        }
+
+        internal void RunDay(int day, Simulation sim)
+        {
+            Console.WriteLine(" Día " + day + " ");
+
+            foreach (Character c in characters)
             {
-                Console.WriteLine(" Día " + day + " iniciado ");
-                human.DoAction(sim);
-
-                Console.WriteLine("Energía actual: " + human.GetEnergy());
-                Console.WriteLine("Recursos actuales: " + sim.Resources);
-
-                Console.WriteLine(" Día " + day + " terminado ");
-                day++;
+                c.Act(sim); 
             }
+
+            Console.WriteLine("Recursos actuales: " + sim.Resources);
+
+            while (actions.Count > 0)
+            {
+                string act = actions.Pop();
+                logs.Enqueue(act);
+                Console.WriteLine(">> " + act);
+            }
+
+            logs.ToList().ForEach(x => Console.WriteLine("Historial: " + x));
+
+            Console.WriteLine(" Día " + day + " terminado");
         }
     }
 }

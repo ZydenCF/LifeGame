@@ -8,9 +8,9 @@ namespace LifeGame
 {
     class Simulation
     {
-        public int Resources { get; set; }
+        internal int Resources { get; set; }
 
-        public Simulation()
+        internal Simulation()
         {
             Resources = 50;
         }
