@@ -12,7 +12,7 @@ namespace LifeGame
         {
             bool exitGame = false;
 
-            while (!exitGame) //Main Menu
+            while (!exitGame) //Menú principal
             {
                 Console.Clear();
                 Console.WriteLine("=== LIFE SIMULATION ===");
@@ -27,18 +27,18 @@ namespace LifeGame
                     Console.WriteLine("Invalid choice. Please enter 1, 2, or 3:");
                 }
 
-                if (choice == 3) //Exit Game
+                if (choice == 3) //Salir del juego
                 {
                     exitGame = true;
                     Console.WriteLine("Goodbye!");
                     break;
                 }
 
-                //simulation and GameManager
+                //Simulación y Manager
                 Simulation sim = new Simulation();
                 GameManager manager = new GameManager();
 
-                if (choice == 1) //Human
+                if (choice == 1) //Humano
                 {
                     Human human = new Human(100, "Carlos");
                     manager.AddCharacter(human);
@@ -49,7 +49,7 @@ namespace LifeGame
                     manager.AddCharacter(robot);
                 }
 
-                //Day Loop
+                //Ciclo de días
                 int day = 1;
                 bool backToMenu = false;
 
@@ -61,23 +61,31 @@ namespace LifeGame
 
                     Console.WriteLine("\n--- Options ---");
                     Console.WriteLine("1. Continue to next day");
-                    Console.WriteLine("2. Return to main menu");
-                    Console.WriteLine("3. Exit game");
+                    Console.WriteLine("2. Show all days report");
+                    Console.WriteLine("3. Return to main menu");
+                    Console.WriteLine("4. Exit game");
                     Console.Write("Choose an option: ");
 
                     int gameChoice;
-                    while (!int.TryParse(Console.ReadLine(), out gameChoice) || (gameChoice < 1 || gameChoice > 3))
+                    while (!int.TryParse(Console.ReadLine(), out gameChoice) || (gameChoice < 1 || gameChoice > 4))
                     {
-                        Console.WriteLine("Invalid choice. Please enter 1, 2, or 3:");
+                        Console.WriteLine("Invalid choice. Please enter 1, 2, 3, or 4:");
                     }
 
                     if (gameChoice == 1)
                     {
-                        continue; //Play Next Day
+                        continue; //Jugar otro día
                     }
                     else if (gameChoice == 2)
                     {
-                        backToMenu = true; //Back to Main Menu
+                        Console.Clear();
+                        manager.ShowAllDays(); //Mostrar historial de Day
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey();
+                    }
+                    else if (gameChoice == 3)
+                    {
+                        backToMenu = true; // Volver al Menú principal
                     }
                     else
                     {
