@@ -13,8 +13,27 @@ namespace LifeGame
             Simulation sim = new Simulation();
             GameManager manager = new GameManager();
 
-            Human human = new Human(100, "Carlos");
-            manager.AddCharacter(human);
+            Console.WriteLine("Welcome to Life Simulation!");
+            Console.WriteLine("Choose your character:");
+            Console.WriteLine("1. Human");
+            Console.WriteLine("2. Robot");
+
+            int choice;
+            while (!int.TryParse(Console.ReadLine(), out choice) || (choice != 1 && choice != 2))
+            {
+                Console.WriteLine("Invalid choice. Please enter 1 for Human or 2 for Robot:");
+            }
+
+            if (choice == 1)
+            {
+                Human human = new Human(100, "Carlos");
+                manager.AddCharacter(human);
+            }
+            else
+            {
+                Robot robot = new Robot(80, "C-3PO");
+                manager.AddCharacter(robot);
+            }
 
             int day = 1;
             while (true)

@@ -8,23 +8,23 @@ namespace LifeGame
         private string model;
         private Random random;
 
-        //Diccionario 
+        // Diccionario 
         private Dictionary<int, string> maintenanceTasks;
 
-        //Lista
+        // Lista
         private List<string> logs;
 
-        //Pila
+        // Pila
         private Stack<string> actions;
 
-        //Cola
+        // Cola
         private Queue<string> notifications;
 
-        //Arreglo
+        // Arreglo
         private string[] statusMessages = { "All systems nominal", "Warning: Low power", "Critical error detected" };
 
-        //Constructor + Herencia
-        internal Robot(int energy, string modelName) : base(energy) 
+        // Constructor + Herencia
+        internal Robot(int energy, string modelName) : base(energy)
         {
             model = modelName;
             random = new Random();
@@ -41,26 +41,34 @@ namespace LifeGame
             notifications = new Queue<string>();
         }
 
-        //Interfaz
-        void IAction.DoAction(string option) 
+        // Interfaz
+        void IAction.DoAction(string option)
         {
             Console.WriteLine(model + " executed: " + option);
-            actions.Push(option); 
+            actions.Push(option);
         }
 
-        //Polimorfismo
+        // Polimorfismo
         public override void Act(Simulation sim)
         {
             Console.WriteLine("\n--- Robot Maintenance Options ---");
 
-            //For
+            // For (recorrer el diccionario)
             foreach (KeyValuePair<int, string> task in maintenanceTasks)
             {
                 Console.WriteLine(task.Key + ". " + task.Value);
             }
 
-            //Switch
-            int choice = random.Next(1, maintenanceTasks.Count + 1);
+            Console.Write("Choose an action: ");
+            int choice;
+
+            // Validar entrada
+            while (!int.TryParse(Console.ReadLine(), out choice) || !maintenanceTasks.ContainsKey(choice))
+            {
+                Console.WriteLine("Invalid choice. Try again:");
+            }
+
+            // Switch (usar la acción seleccionada)
             switch (choice)
             {
                 case 1:
@@ -77,7 +85,7 @@ namespace LifeGame
                     break;
             }
 
-            //While
+            // While (procesar notificaciones)
             int cycles = 0;
             while (cycles < 2 && notifications.Count > 0)
             {
@@ -88,12 +96,12 @@ namespace LifeGame
             Console.WriteLine(model + " status: " + GetStatus());
         }
 
-        private void PerformTask(string task, Simulation sim) 
+        private void PerformTask(string task, Simulation sim)
         {
             Console.WriteLine(model + " performed: " + task);
             logs.Add(task);
 
-            //If else
+            // If else
             if (task == "Self-diagnostic")
             {
                 Energy += 5;
@@ -114,11 +122,11 @@ namespace LifeGame
             }
         }
 
-        //Return
+        // Return
         private string GetStatus()
         {
-            //Array
-            int index = random.Next(0, statusMessages.Length); 
+            // Array
+            int index = random.Next(0, statusMessages.Length);
             return statusMessages[index];
         }
     }
