@@ -27,18 +27,18 @@ namespace LifeGame
                     Console.WriteLine("Invalid choice. Please enter 1, 2, or 3:");
                 }
 
-                if (choice == 3) //Salir del juego
+                if (choice == 3) //Exit the game
                 {
                     exitGame = true;
                     Console.WriteLine("Goodbye!");
                     break;
                 }
 
-                //Simulación y Manager
+                //Simulation and Manager
                 Simulation sim = new Simulation();
                 GameManager manager = new GameManager();
 
-                if (choice == 1) //Humano
+                if (choice == 1) //Human
                 {
                     Human human = new Human(100, "Carlos");
                     manager.AddCharacter(human);
@@ -49,7 +49,7 @@ namespace LifeGame
                     manager.AddCharacter(robot);
                 }
 
-                //Ciclo de días
+                //Cycle of days
                 int day = 1;
                 bool backToMenu = false;
 
@@ -74,18 +74,18 @@ namespace LifeGame
 
                     if (gameChoice == 1)
                     {
-                        continue; //Jugar otro día
+                        continue; //Play another day
                     }
                     else if (gameChoice == 2)
                     {
                         Console.Clear();
-                        manager.ShowAllDays(); //Mostrar historial de Day
+                        manager.ShowAllDays(); //Show Day history
                         Console.WriteLine("Press any key to continue...");
                         Console.ReadKey();
                     }
                     else if (gameChoice == 3)
                     {
-                        backToMenu = true; // Volver al Menú principal
+                        backToMenu = true; // Return to the Main Menu
                     }
                     else
                     {

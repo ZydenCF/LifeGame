@@ -8,19 +8,19 @@ namespace LifeGame
         private string model;
         private Random random;
 
-        // Diccionario 
+        // Dictionary
         private Dictionary<int, string> maintenanceTasks;
 
-        // Lista
+        // List
         private List<string> logs;
 
-        // Pila
+        // Stack
         private Stack<string> actions;
 
-        // Cola
+        // Line
         private Queue<string> notifications;
 
-        // Arreglo
+        // Arrangement
         private string[] statusMessages = { "All systems nominal", "Warning: Low power", "Critical error detected" };
 
         // Constructor + Herencia
@@ -41,19 +41,19 @@ namespace LifeGame
             notifications = new Queue<string>();
         }
 
-        // Interfaz
+        // Interface
         void IAction.DoAction(string option)
         {
             Console.WriteLine(model + " executed: " + option);
             actions.Push(option);
         }
 
-        // Polimorfismo
+        // Polymorphism
         public override void Act(Simulation sim)
         {
             Console.WriteLine("\n--- Robot Maintenance Options ---");
 
-            // For (recorrer el diccionario)
+            // For (look through the dictionary)
             foreach (KeyValuePair<int, string> task in maintenanceTasks)
             {
                 Console.WriteLine(task.Key + ". " + task.Value);
@@ -62,13 +62,13 @@ namespace LifeGame
             Console.Write("Choose an action: ");
             int choice;
 
-            // Validar entrada
+            // Validate input
             while (!int.TryParse(Console.ReadLine(), out choice) || !maintenanceTasks.ContainsKey(choice))
             {
                 Console.WriteLine("Invalid choice. Try again:");
             }
 
-            // Switch (usar la acción seleccionada)
+            // Switch (use the selected action)
             switch (choice)
             {
                 case 1:
@@ -85,7 +85,7 @@ namespace LifeGame
                     break;
             }
 
-            // While (procesar notificaciones)
+            // While (process notifications)
             int cycles = 0;
             while (cycles < 2 && notifications.Count > 0)
             {

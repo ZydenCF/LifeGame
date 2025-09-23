@@ -19,15 +19,15 @@ namespace LifeGame
 
         void IAction.DoAction(string option)
         {
-            Console.WriteLine(name + " decidió: " + option);
+            Console.WriteLine(name + " decided: " + option);
         }
 
         public override void Act(Simulation sim)
         {
-            Console.WriteLine("\n--- Opciones del Humano ---");
-            Console.WriteLine("1. Ir al colegio");
-            Console.WriteLine("2. Comer");
-            Console.WriteLine("3. Dormir");
+            Console.WriteLine("--- Human Options ---");
+            Console.WriteLine("1. Go to school");
+            Console.WriteLine("2. Eat");
+            Console.WriteLine("3. Sleep");
 
             int choice = Convert.ToInt32(Console.ReadLine());
 
@@ -37,21 +37,21 @@ namespace LifeGame
                     bool escapo = random.Next(0, 2) == 0;
                     if (escapo)
                     {
-                        Console.WriteLine(name + " escapó del colegio.");
-                        sim.Resources -= 5;
+                        Console.WriteLine(name + "ran away from school.");
+                        sim.Resources = 5;
                     }
                     else
                     {
-                        Console.WriteLine(name + " estudió mucho.");
-                        sim.Resources += 10;
+                        Console.WriteLine(name + "studied hard.");
+                        sim.Resources = 10;
                     }
                     break;
 
                 case 2:
                     Dictionary<int, string> food = new Dictionary<int, string>()
                     {
-                        { 1, "Comida chatarra" },
-                        { 2, "Comida saludable" }
+                        { 1, "Junk food" },
+                        { 2, "Healthy food" }
                     };
                     int foodChoice = random.Next(1, 3);
                     Console.WriteLine(name + " comió: " + food[foodChoice]);
@@ -63,18 +63,18 @@ namespace LifeGame
                     break;
 
                 case 3:
-                    string[] sleep = { "Descansó bien", "Jugó PS5 toda la noche" };
+                    string[] sleep = { "Rest well", "Played PS5 all night" };
                     string result = sleep[random.Next(0, sleep.Length)];
                     Console.WriteLine(name + " " + result);
 
-                    if (result == "Descansó bien")
+                    if (result == "He rested well")
                         sim.Resources += 5;
                     else
                         sim.Resources -= 10;
                     break;
 
                 default:
-                    Console.WriteLine(name + " no hizo nada.");
+                    Console.WriteLine(name + " did nothing.");
                     break;
             }
         }

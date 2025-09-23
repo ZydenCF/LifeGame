@@ -7,9 +7,9 @@ namespace LifeGame
     {
         private int dayNumber;                 
         private List<string> actions;          
-        private string summary;               
+        private string summary;
 
-        //Constructor
+        //Builder
         internal Day(int number)
         {
             dayNumber = number;
@@ -17,19 +17,19 @@ namespace LifeGame
             summary = "";
         }
 
-        //acción del día
+        //action of the day
         internal void AddAction(string action)
         {
             actions.Add(action);
         }
 
-        //resumen
+        //summary
         internal void SetSummary(string text)
         {
             summary = text;
         }
 
-        //información del día
+        //information of the day
         internal void ShowDayReport()
         {
             Console.WriteLine($"\n=== Day {dayNumber} Report ===");
@@ -43,13 +43,13 @@ namespace LifeGame
             Console.WriteLine("=============================\n");
         }
 
-        //número de día
+        //dayNumber
         internal int GetDayNumber()
         {
             return dayNumber;
         }
 
-        //resumen
+        //summary
         internal string GetSummary()
         {
             return summary;

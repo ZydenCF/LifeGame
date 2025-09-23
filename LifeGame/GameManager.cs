@@ -70,7 +70,7 @@ namespace LifeGame
         //mostrar historial
         internal void ShowAllDays()
         {
-            Console.WriteLine("\n=== GAME HISTORY ===");
+            Console.WriteLine("=== GAME HISTORY ===");
             foreach (Day d in days)
             {
                 d.ShowDayReport();

@@ -1,0 +1,12 @@
+David:
+-Human 
+-MangarGamer
+-Program
+-IAction
+
+
+Haruo:
+-Robot
+-Day
+-Character
+-Program
